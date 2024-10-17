@@ -14,10 +14,22 @@ namespace Talabat.Repository
         public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> innerQuery, ISpecification<TEntity> specification)
         {
             var query = innerQuery;
+            
+            
             if(specification.Criteria is not null)
             {
                 query = query.Where(specification.Criteria);
             }
+
+            if(specification.OrderBy is not null) 
+            { 
+                query = query.OrderBy(specification.OrderBy);
+            }
+            else if(specification.OrderByDesc is not null)
+            {
+                query = query.OrderByDescending(specification.OrderByDesc);
+            }
+
             query = specification.Includes.Aggregate(query, (currentQuery, IncludesExpression) => currentQuery.Include(IncludesExpression));
             return query;
         }
