@@ -12,6 +12,8 @@ namespace Talabat.Core.Specifications.ProductSpecifications
         public ProductWithBrandAndCategorySpecifications(ProductSpecParams specParams) : base
             (
                 p => 
+                (string.IsNullOrEmpty(specParams.Search) || p.Name.ToLower().Contains(specParams.Search.ToLower()))
+                &&
                 (!specParams.BrandId.HasValue || p.BrandId == specParams.BrandId.Value) 
                 && 
                 (!specParams.CategoryId.HasValue || p.CategoryId == specParams.CategoryId.Value)
@@ -40,6 +42,10 @@ namespace Talabat.Core.Specifications.ProductSpecifications
                 AddOrederBy(p => p.Name);
             }
 
+
+            // pageSize = 2
+            // PageIndex = 1
+            // 0 2
             ApplyPagination((specParams.PageIndex -1) * specParams.PageSize, specParams.PageSize);
         }
 

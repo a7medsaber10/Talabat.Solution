@@ -38,7 +38,7 @@ namespace Talabat.Core.Specifications
             OrderByDesc = orderByDescExpression;
         }
 
-        public void ApplyPagination(int take, int skip)
+        public void ApplyPagination(int skip, int take)
         {
             IsPaginationEnabled = true;
             Take = take;
