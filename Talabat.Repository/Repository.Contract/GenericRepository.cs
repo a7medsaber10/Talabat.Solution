@@ -9,7 +9,7 @@ using Talabat.Core.Repositories.Contract;
 using Talabat.Core.Specifications;
 using Talabat.Repository.Data;
 
-namespace Talabat.Repository
+namespace Talabat.Repository.Repository.Contract
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
@@ -22,9 +22,9 @@ namespace Talabat.Repository
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            if(typeof(T) == typeof(Product)) 
+            if (typeof(T) == typeof(Product))
             {
-                return (IReadOnlyList<T>) await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync();
+                return (IReadOnlyList<T>)await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync();
             }
             return await _dbContext.Set<T>().ToListAsync();
         }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Helpers;
 using Talabat.Core.Repositories.Contract;
-using Talabat.Repository;
+using Talabat.Repository.Repository.Contract;
 
 namespace Talabat.APIs.Extensions
 {
