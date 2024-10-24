@@ -15,6 +15,8 @@ namespace Talabat.APIs.Extensions
 
             services.AddAutoMapper(typeof(MappingProfile));
 
+            services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = (actionContext) =>
