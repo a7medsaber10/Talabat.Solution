@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
@@ -6,6 +7,7 @@ using Talabat.APIs.Errors;
 using Talabat.APIs.Extensions;
 using Talabat.APIs.Helpers;
 using Talabat.APIs.MiddleWares;
+using Talabat.Core.Entities.Identity;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Repository;
 using Talabat.Repository.Data;
@@ -37,6 +39,8 @@ namespace Talabat.APIs
 
             builder.Services.AddApplicationServices();
 
+            builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDBContext>();
+
             builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
             {
                 var connection = builder.Configuration.GetConnectionString("Redis");
@@ -50,6 +54,7 @@ namespace Talabat.APIs
             var services = scope.ServiceProvider;
             var _dbContext = services.GetRequiredService<StoreContext>();
             var _identityDBContext = services.GetRequiredService<AppIdentityDBContext>();
+            var _userManager = services.GetRequiredService<UserManager<AppUser>>();
 
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             
@@ -59,6 +64,7 @@ namespace Talabat.APIs
                 await _identityDBContext.Database.MigrateAsync();
 
                 await StoreContextSeed.SeedAsync(_dbContext);
+                await AppIdentityDBContextSeed.SeedUserAsync(_userManager);
             }
             catch (Exception ex)
             {
