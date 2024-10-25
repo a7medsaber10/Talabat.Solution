@@ -9,6 +9,7 @@ using Talabat.APIs.MiddleWares;
 using Talabat.Core.Repositories.Contract;
 using Talabat.Repository;
 using Talabat.Repository.Data;
+using Talabat.Repository.Identity;
 
 namespace Talabat.APIs
 {
@@ -29,6 +30,11 @@ namespace Talabat.APIs
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddDbContext<AppIdentityDBContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
+
             builder.Services.AddApplicationServices();
 
             builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
@@ -43,12 +49,14 @@ namespace Talabat.APIs
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var _dbContext = services.GetRequiredService<StoreContext>();
+            var _identityDBContext = services.GetRequiredService<AppIdentityDBContext>();
 
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             
             try
             {
                 await _dbContext.Database.MigrateAsync();
+                await _identityDBContext.Database.MigrateAsync();
 
                 await StoreContextSeed.SeedAsync(_dbContext);
             }
