@@ -20,6 +20,10 @@ namespace Talabat.Repository.Data.Configurations
             builder.OwnsOne(o => o.ShippingAddress, shippingAddress => shippingAddress.WithOwner());
 
             builder.Property(o => o.SubTotal).HasColumnType("decimal(18,2)");
+
+            builder.HasOne(o => o.DeliveryMethod)
+                .WithMany()
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

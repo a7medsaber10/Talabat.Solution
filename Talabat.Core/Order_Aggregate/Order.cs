@@ -32,7 +32,9 @@ namespace Talabat.Core.Order_Aggregate
 
         public Address ShippingAddress { get; set; }
 
-        public DeliveryMethod DeliveryMethod { get; set; }
+        public int? DeliveryMethodId { get; set; }
+
+        public DeliveryMethod? DeliveryMethod { get; set; }
 
         public ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>();
 
