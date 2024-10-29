@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Talabat.Core;
 using Talabat.Core.Entities;
 using Talabat.Core.Order_Aggregate;
 using Talabat.Core.Repositories.Contract;
@@ -13,19 +14,18 @@ namespace Talabat.Services
     public class OrderService : IOrderService
     {
         private readonly IBasketRepository _basketRepository;
-        private readonly IGenericRepository<Product> _productRepo;
-        private readonly IGenericRepository<DeliveryMethod> _deliveryRepo;
-        private readonly IGenericRepository<Order> _orderRepo;
+        private readonly IUnitOfWork _unitOfWork;
+        //private readonly IGenericRepository<Product> _productRepo;
+        //private readonly IGenericRepository<DeliveryMethod> _deliveryRepo;
+        //private readonly IGenericRepository<Order> _orderRepo;
 
-        public OrderService(IBasketRepository basketRepository,
-            IGenericRepository<Product> productRepo,
-            IGenericRepository<DeliveryMethod> deliveryRepo,
-            IGenericRepository<Order> orderRepo)
+        public OrderService(IBasketRepository basketRepository,IUnitOfWork unitOfWork)
         {
             _basketRepository = basketRepository;
-            _productRepo = productRepo;
-            _deliveryRepo = deliveryRepo;
-            _orderRepo = orderRepo;
+            _unitOfWork = unitOfWork;
+            //_productRepo = productRepo;
+            //_deliveryRepo = deliveryRepo;
+            //_orderRepo = orderRepo;
         }
         public async Task<Order> CreateOrderAsync(string buyerEmail, string basketId, int DeliveryMethodId, Address shippingAddress)
         {
