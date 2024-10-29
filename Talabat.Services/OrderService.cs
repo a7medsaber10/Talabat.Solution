@@ -27,7 +27,7 @@ namespace Talabat.Services
             //_deliveryRepo = deliveryRepo;
             //_orderRepo = orderRepo;
         }
-        public async Task<Order> CreateOrderAsync(string buyerEmail, string basketId, int DeliveryMethodId, Address shippingAddress)
+        public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int DeliveryMethodId, Address shippingAddress)
         {
             var basket = await _basketRepository.GetBasketAsync(basketId);
 
@@ -37,7 +37,7 @@ namespace Talabat.Services
             {
                 foreach (var item in basket.Items)
                 {
-                    var product = await _productRepo.GetAsync(item.Id);
+                    var product = await _unitOfWork.Repository<Product>().GetAsync(item.Id);
 
                     var productItemOrdered = new ProductItemOrdered(item.Id, product.Name, product.PictureUrl);
 
@@ -49,11 +49,18 @@ namespace Talabat.Services
 
             var subTotal = orderItems.Sum(orderItem => orderItem.Price * orderItem.Quantity);
 
-            var deliveryMethod = await _deliveryRepo.GetAsync(DeliveryMethodId);
+            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetAsync(DeliveryMethodId);
 
             var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal);
 
-            await _orderRepo.AddAsync(order);
+            await _unitOfWork.Repository<Order>().AddAsync(order);
+
+            var result = await _unitOfWork.CompleteAsync();
+            if (result <= 0)
+            {
+                return null;
+            }
+            return order;
         }
 
         public Task<Order> GetOrderByIdForUserAsync(int orderId, string buyerEmail)
