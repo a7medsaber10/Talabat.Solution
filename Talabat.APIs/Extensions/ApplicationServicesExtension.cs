@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Helpers;
 using Talabat.Core;
+using Talabat.Core.Order_Aggregate;
 using Talabat.Core.Repositories.Contract;
+using Talabat.Core.Services.Contract;
 using Talabat.Repository;
 using Talabat.Repository.Repository.Contract;
+using Talabat.Services;
 
 namespace Talabat.APIs.Extensions
 {
@@ -16,6 +19,8 @@ namespace Talabat.APIs.Extensions
             //services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+
+            services.AddScoped(typeof(IOrderService), typeof(OrderService));
 
             services.AddAutoMapper(typeof(MappingProfile));
 
