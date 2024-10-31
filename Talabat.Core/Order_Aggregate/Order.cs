@@ -41,6 +41,6 @@ namespace Talabat.Core.Order_Aggregate
 
         public decimal GetTotal() => SubTotal + DeliveryMethod.Cost;
 
-        public string PaymentIntendId { get; set; }
+        public string PaymentIntendId { get; set; } = string.Empty;
     }
 }
