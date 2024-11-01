@@ -37,5 +37,13 @@ namespace Talabat.APIs.Controllers
             var orders = await _orderService.GetOrdersForUserAsync(email);
             return Ok(orders);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Order>> GetOrderByIdForUser(int id, string email)
+        {
+            var order = await _orderService.GetOrderByIdForUserAsync(id, email);
+            if(order is null) return NotFound(new APIResponse(404));
+            return Ok(order);
+        }
     }
 }
