@@ -25,7 +25,7 @@ namespace Talabat.APIs.Controllers
         public async Task<ActionResult<Order>> CreateOrder(OrderDTO orderDTO)
         {
             var address = _mapper.Map<AddressDTO, Address>(orderDTO.ShippingAddress);
-            var order = await _orderService.CreateOrderAsync(orderDTO.BuyerEmail, orderDTO.BasketId, orderDTO.DeliveryMathod, address);
+            var order = await _orderService.CreateOrderAsync(orderDTO.BuyerEmail, orderDTO.BasketId, orderDTO.DeliveryMethodId, address);
 
             if (order is null) { return BadRequest(new APIResponse(400)); }
             return Ok(order);
