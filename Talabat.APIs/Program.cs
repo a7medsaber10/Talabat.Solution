@@ -9,9 +9,11 @@ using Talabat.APIs.Helpers;
 using Talabat.APIs.MiddleWares;
 using Talabat.Core.Entities.Identity;
 using Talabat.Core.Repositories.Contract;
+using Talabat.Core.Services.Contract;
 using Talabat.Repository;
 using Talabat.Repository.Data;
 using Talabat.Repository.Identity;
+using Talabat.Services;
 
 namespace Talabat.APIs
 {
@@ -40,6 +42,8 @@ namespace Talabat.APIs
             builder.Services.AddApplicationServices();
 
             builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDBContext>();
+
+            builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
 
             builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
             {
