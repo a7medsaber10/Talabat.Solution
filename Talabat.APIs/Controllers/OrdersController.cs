@@ -22,28 +22,28 @@ namespace Talabat.APIs.Controllers
         [ProducesResponseType(typeof(Order), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(OrderDTO orderDTO)
+        public async Task<ActionResult<OrderToReturnDTO>> CreateOrder(OrderDTO orderDTO)
         {
             var address = _mapper.Map<AddressDTO, Address>(orderDTO.ShippingAddress);
             var order = await _orderService.CreateOrderAsync(orderDTO.BuyerEmail, orderDTO.BasketId, orderDTO.DeliveryMethodId, address);
 
             if (order is null) { return BadRequest(new APIResponse(400)); }
-            return Ok(order);
+            return Ok(_mapper.Map<Order, OrderToReturnDTO>(order));
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Order>>> GetOrdersForUserAsync(string email)
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDTO>>> GetOrdersForUserAsync(string email)
         {
             var orders = await _orderService.GetOrdersForUserAsync(email);
-            return Ok(orders);
+            return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDTO>>(orders));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrderByIdForUser(int id, string email)
+        public async Task<ActionResult<OrderToReturnDTO>> GetOrderByIdForUser(int id, string email)
         {
             var order = await _orderService.GetOrderByIdForUserAsync(id, email);
             if(order is null) return NotFound(new APIResponse(404));
-            return Ok(order);
+            return Ok(_mapper.Map<Order, OrderToReturnDTO>(order));
         }
     }
 }
