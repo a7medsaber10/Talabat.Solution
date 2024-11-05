@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Talabat.APIs.DTOs;
 using Talabat.APIs.Errors;
+using Talabat.APIs.Extensions;
 using Talabat.Core.Entities.Identity;
 using Talabat.Core.Services.Contract;
 
@@ -60,6 +64,29 @@ namespace Talabat.APIs.Controllers
                 Email = user.Email,
                 Token = await _authService.CreateTokenAsync(user, _userManager)
             });
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<ActionResult<UserDTO>> GetCurrentUser()
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+            var user = await _userManager.FindByEmailAsync(email);
+            return Ok(new UserDTO()
+            {
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                Token = await _authService.CreateTokenAsync(user, _userManager)
+            });
+        }
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<ActionResult<Address>> GetUserAddress()
+        {
+            //var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+            var user = await _userManager.FindUserWithAddressByEmailAsync(User);
+            return Ok(user.Address);
         }
     }
 }
