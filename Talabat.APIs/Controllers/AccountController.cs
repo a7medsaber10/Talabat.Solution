@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -17,12 +18,14 @@ namespace Talabat.APIs.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IAuthService _authService;
+        private readonly IMapper _mapper;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IAuthService authService)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IAuthService authService, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _authService = authService;
+            _mapper = mapper;
         }
 
         [HttpPost("login")]
@@ -46,6 +49,9 @@ namespace Talabat.APIs.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
+            if(CheckEmailExist(registerDTO.Email).Result.Value)
+                return BadRequest(new APIValidtionErrorResponse() { Errors = new string[] { "This email is already exists!" } });
+
             var user = new AppUser()
             {
                 DisplayName = registerDTO.DisplayName,
@@ -81,12 +87,37 @@ namespace Talabat.APIs.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet]
-        public async Task<ActionResult<Address>> GetUserAddress()
+        [HttpGet("address")]
+        public async Task<ActionResult<AddressDTO>> GetUserAddress()
         {
             //var email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
             var user = await _userManager.FindUserWithAddressByEmailAsync(User);
-            return Ok(user.Address);
+            return Ok(_mapper.Map<Address, AddressDTO>(user.Address));
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut("address")]
+        public async Task<ActionResult<Address>> UpdateUserAddress(AddressDTO address)
+        {
+            var updatedAddress = _mapper.Map<AddressDTO, Address>(address);
+
+            var user = await _userManager.FindUserWithAddressByEmailAsync(User);
+
+            updatedAddress.Id = user.Address.Id;
+
+            user.Address = updatedAddress;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded) return BadRequest(400);
+            return Ok(address);
+        }
+
+        [HttpGet("emailExist")]
+        public async Task<ActionResult<bool>> CheckEmailExist(string email)
+        {
+            return await _userManager.FindByEmailAsync(email) is not null;
         }
     }
 }
