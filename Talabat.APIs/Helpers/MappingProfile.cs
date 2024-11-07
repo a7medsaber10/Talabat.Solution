@@ -14,8 +14,8 @@ namespace Talabat.APIs.Helpers
                                             .ForMember(d => d.Category, o => o.MapFrom(s => s.Category.Name))
                                             .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductPictureURLResolver>());
 
-            CreateMap<CustomerBasketDTO, CustomerBasket>();
-            CreateMap<BasketItemDTO, BasketItem>();
+            CreateMap<CustomerBasketDTO, CustomerBasket>().ReverseMap();
+            CreateMap<BasketItemDTO, BasketItem>().ReverseMap();
 
             CreateMap<AddressDTO, Core.Order_Aggregate.Address>();
 

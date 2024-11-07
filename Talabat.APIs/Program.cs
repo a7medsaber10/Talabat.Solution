@@ -63,6 +63,8 @@ namespace Talabat.APIs
 
             builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
 
+            builder.Services.AddScoped(typeof(IPaymentService), typeof(PaymentService));  
+
             builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
             {
                 var connection = builder.Configuration.GetConnectionString("Redis");
