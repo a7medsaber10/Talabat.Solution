@@ -16,14 +16,17 @@ namespace Talabat.Services
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPaymentService _paymentService;
+
         //private readonly IGenericRepository<Product> _productRepo;
         //private readonly IGenericRepository<DeliveryMethod> _deliveryRepo;
         //private readonly IGenericRepository<Order> _orderRepo;
 
-        public OrderService(IBasketRepository basketRepository,IUnitOfWork unitOfWork)
+        public OrderService(IBasketRepository basketRepository,IUnitOfWork unitOfWork, IPaymentService paymentService)
         {
             _basketRepository = basketRepository;
             _unitOfWork = unitOfWork;
+            _paymentService = paymentService;
             //_productRepo = productRepo;
             //_deliveryRepo = deliveryRepo;
             //_orderRepo = orderRepo;
@@ -52,7 +55,18 @@ namespace Talabat.Services
 
             var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetAsync(DeliveryMethodId);
 
-            var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal);
+            var spec = new OrderWithPaymentIntentSpecifications(basket.PaymentIntent);
+
+            var ExOrder = await _unitOfWork.Repository<Order>().GetWithSpecAsync(spec);
+
+            if (ExOrder is not null)
+            {
+                _unitOfWork.Repository<Order>().Delete(ExOrder);
+
+                await _paymentService.CreateOrUpdatePaymentIntent(basketId);
+            }
+
+            var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntent);
 
             await _unitOfWork.Repository<Order>().AddAsync(order);
 
