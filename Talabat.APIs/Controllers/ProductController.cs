@@ -35,7 +35,6 @@ namespace Talabat.APIs.Controllers
         }
 
         [CachedAttribute(300)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetProducts([FromQuery]ProductSpecParams specParams)
         {

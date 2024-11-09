@@ -38,7 +38,7 @@ namespace Talabat.APIs.MiddleWares
                 var response = _env.IsDevelopment() ? 
                                                     new APIExceptionResponse(statuscode, ex.Message, ex.StackTrace.ToString()) 
                                                     :
-                                                    new APIExceptionResponse(statuscode);
+                                                    new APIExceptionResponse(statuscode, ex.Message, ex.StackTrace.ToString());
 
                 var json = JsonSerializer.Serialize(response, options);
                 await context.Response.WriteAsync(json);
