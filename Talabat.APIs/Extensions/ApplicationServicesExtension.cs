@@ -26,6 +26,8 @@ namespace Talabat.APIs.Extensions
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
 
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = (actionContext) =>

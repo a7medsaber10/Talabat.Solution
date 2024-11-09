@@ -33,6 +33,8 @@ namespace Talabat.APIs.Controllers
             _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
+
+        [CachedAttribute(300)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetProducts([FromQuery]ProductSpecParams specParams)
@@ -52,7 +54,7 @@ namespace Talabat.APIs.Controllers
 
         [ProducesResponseType(typeof(ProductDTO),StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(APIResponse), StatusCodes.Status404NotFound)]
-
+        [CachedAttribute(300)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDTO>> GetProductById(int id)
         {
@@ -66,6 +68,8 @@ namespace Talabat.APIs.Controllers
         }
 
         [HttpGet("brands")]
+        [CachedAttribute(300)]
+
         public async Task<ActionResult<IEnumerable<ProductBrand>>> GetBrands()
         {
             var brands = await _brandRepository.GetAllAsync();
@@ -74,6 +78,7 @@ namespace Talabat.APIs.Controllers
 
 
         [HttpGet("categories")]
+        [CachedAttribute(300)]
         public async Task<ActionResult<IEnumerable<ProductCategory>>> GetCategories()
         {
             var categories = await _categoryRepository.GetAllAsync();
