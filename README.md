@@ -42,7 +42,7 @@ git clone https://github.com/a7medsaber10/Talabat.Solution.git
 cd Talabat.Solution
 ```
 
-🔧 Configuration
+### 🔧 Configuration
 Edit appsettings.json in Talabat.APIs:
 ```bash
 "ConnectionStrings": {
@@ -58,20 +58,20 @@ Edit appsettings.json in Talabat.APIs:
 }
 ```
 
-🛠️ Database Setup
+### 🛠️ Database Setup
 Apply migrations and create the DB:
 
-bash
-Copy
-Edit
+```bash
 cd Talabat.APIs
 dotnet ef database update
-▶️ Run the App
-bash
-Copy
-Edit
+```
+
+### ▶️ Run the App
+```bash
 dotnet run --project Talabat.APIs
+```
 Visit https://localhost:{port}/swagger for interactive API docs.
+
 
 📚 Main Features
 Module	Description
