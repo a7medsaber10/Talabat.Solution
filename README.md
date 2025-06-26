@@ -72,6 +72,7 @@ dotnet run --project Talabat.APIs
 ```
 Visit https://localhost:{port}/swagger for interactive API docs.
 
+---
 
 ### 📚 Main Features
 | Module            | Description                                              |
@@ -83,7 +84,7 @@ Visit https://localhost:{port}/swagger for interactive API docs.
 | **Admin Tools**   | (Via AdminDashboard) Manage users, orders, and analytics |
 
 
-🔌 Key Patterns & Practices
+### 🔌 Key Patterns & Practices
 Onion Architecture: Decouples domain logic from infrastructure and APIs
 
 Repository Pattern: Clean EF Core data access
@@ -96,7 +97,8 @@ Mapping: AutoMapper for clean transformation between DTOs and entities
 
 SMS Integration: Twilio for notifying customers in real-time
 
-📦 Folder-by-Folder Breakdown
+### 📦 Folder-by-Folder Breakdown
+
 🧠 Talabat.Core
 Entities (Product, Order, DeliveryMethod, etc.)
 
