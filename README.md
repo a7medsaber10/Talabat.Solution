@@ -147,5 +147,6 @@ Visit https://localhost:{port}/swagger for interactive API docs.
 
 ### 👨‍💻 Author
 **Ahmed Saber**
-- **GitHub**: @a7medsaber10
-- **Linkedin**: 
+- **GitHub**: https://github.com/a7medsaber10
+- **Linkedin**: https://www.linkedin.com/in/a7medsaber10
+- **Email**: ahmedsa2522003@gmail.com
