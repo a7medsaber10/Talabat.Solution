@@ -73,13 +73,15 @@ dotnet run --project Talabat.APIs
 Visit https://localhost:{port}/swagger for interactive API docs.
 
 
-📚 Main Features
-Module	Description
-Products	CRUD for food items, categories, pricing
-Baskets	Add/remove/update items with Redis caching
-Orders	Place and track orders, assign delivery
-Notifications	SMS alerts to customers using Twilio
-Admin Tools	(Via AdminDashboard) Manage users, orders, and analytics
+### 📚 Main Features
+| Module            | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| **Products**      | CRUD for food items, categories, pricing                 |
+| **Baskets**       | Add/remove/update items with Redis caching               |
+| **Orders**        | Place and track orders, assign delivery                  |
+| **Notifications** | SMS alerts to customers using Twilio                     |
+| **Admin Tools**   | (Via AdminDashboard) Manage users, orders, and analytics |
+
 
 🔌 Key Patterns & Practices
 Onion Architecture: Decouples domain logic from infrastructure and APIs
