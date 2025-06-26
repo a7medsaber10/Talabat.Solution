@@ -5,6 +5,7 @@ A scalable and modular eCommerce backend system, built using **Onion Architectur
 ## 📦 Architecture Overview
 
 This solution adopts **Onion Architecture**, structured into clear layers:
+```bash
 Talabat.Solution/
 │
 ├── Talabat.APIs # ASP.NET Core Web API layer
@@ -12,6 +13,7 @@ Talabat.Solution/
 ├── Talabat.Repository # Infrastructure: EF Core, Redis
 ├── Talabat.Services # Application services, business logic
 └── AdminDashboard # (Optional) Admin web frontend or API consumer
+```
 
 ### 🔁 Technologies & Tools
 
