@@ -85,17 +85,17 @@ Visit https://localhost:{port}/swagger for interactive API docs.
 
 
 ### 🔌 Key Patterns & Practices
-Onion Architecture: Decouples domain logic from infrastructure and APIs
+- Onion Architecture: Decouples domain logic from infrastructure and APIs
 
-Repository Pattern: Clean EF Core data access
+- Repository Pattern: Clean EF Core data access
 
-Service Layer: Centralized business operations
+- Service Layer: Centralized business operations
 
-Caching: Redis used to improve performance of frequent reads
+- Caching: Redis used to improve performance of frequent reads
 
-Mapping: AutoMapper for clean transformation between DTOs and entities
+- Mapping: AutoMapper for clean transformation between DTOs and entities
 
-SMS Integration: Twilio for notifying customers in real-time
+- SMS Integration: Twilio for notifying customers in real-time
 
 ### 📦 Folder-by-Folder Breakdown
 
