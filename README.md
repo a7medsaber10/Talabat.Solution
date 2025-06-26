@@ -77,76 +77,75 @@ Visit https://localhost:{port}/swagger for interactive API docs.
 ### 📚 Main Features
 | Module            | Description                                              |
 | ----------------- | -------------------------------------------------------- |
-| Products          | CRUD for food items, categories, pricing                 |
-| Baskets           | Add/remove/update items with Redis caching               |
-| Orders            | Place and track orders, assign delivery                  |
-| Notifications     | SMS alerts to customers using Twilio                     |
-| Admin Tools       | (Via AdminDashboard) Manage users, orders, and analytics |
+| **Products**      | CRUD for food items, categories, pricing                 |
+| **Baskets**       | Add/remove/update items with Redis caching               |
+| **Orders**        | Place and track orders, assign delivery                  |
+| **Notifications** | SMS alerts to customers using Twilio                     |
+| **Admin Tools**   | (Via AdminDashboard) Manage users, orders, and analytics |
 
 
 ### 🔌 Key Patterns & Practices
-- Onion Architecture: Decouples domain logic from infrastructure and APIs
+- **Onion Architecture**: Decouples domain logic from infrastructure and APIs
 
-- Repository Pattern: Clean EF Core data access
+- **Repository Pattern**: Clean EF Core data access
 
-- Service Layer: Centralized business operations
+- **Service Layer**: Centralized business operations
 
-- Caching: Redis used to improve performance of frequent reads
+- **Caching**: Redis used to improve performance of frequent reads
 
-- Mapping: AutoMapper for clean transformation between DTOs and entities
+- **Mapping**: AutoMapper for clean transformation between DTOs and entities
 
-- SMS Integration: Twilio for notifying customers in real-time
+- **SMS Integration**: Twilio for notifying customers in real-time
 
 ### 📦 Folder-by-Folder Breakdown
 
-🧠 Talabat.Core
-Entities (Product, Order, DeliveryMethod, etc.)
+🧠 **Talabat.Core**
+- Entities (Product, Order, DeliveryMethod, etc.)
 
-Interfaces (Repositories, IUnitOfWork)
+- Interfaces (Repositories, IUnitOfWork)
 
-📚 Talabat.Repository
-EF Core context (StoreContext)
+📚 **Talabat.Repository**
+- EF Core context (StoreContext)
 
-Repository Implementations
+- Repository Implementations
 
-Redis caching logic
+- Redis caching logic
 
-🧩 Talabat.Services
-Business services (e.g., OrderService, BasketService)
+🧩 **Talabat.Services**
+- Business services (e.g., OrderService, BasketService)
 
-DTOs and validators
+- DTOs and validators
 
-🌐 Talabat.APIs
-Controllers (ProductController, OrderController, etc.)
+🌐 **Talabat.APIs**
+- Controllers (ProductController, OrderController, etc.)
 
-Swagger config
+- Swagger config
 
-Middleware (error handling, logging)
+- Middleware (error handling, logging)
 
-📊 AdminDashboard
-Optional frontend or separate UI project for Admins (may use Angular, Blazor, or Razor Pages)
+📊 **AdminDashboard**
+- Optional frontend or separate UI project for Admins (may use Angular, Blazor, or Razor Pages)
 
-Manages products, orders, and customers
+- Manages products, orders, and customers
 
-Connects via API to the backend
+- Connects via API to the backend
 
-✅ To-Do / Future Enhancements
- Add JWT Authentication & Role-based Authorization
+---
 
- Add unit/integration tests
+### ✅ To-Do / Future Enhancements
+ - Add JWT Authentication & Role-based Authorization
 
- Add Stripe payment integration
+ - Add unit/integration tests
 
- Deploy to Azure / Docker container
+ - Add Stripe payment integration
 
- Implement Email notifications via SendGrid
+ - Deploy to Azure / Docker container
 
-🤝 Contributing
-Contributions are welcome! Open an issue or submit a pull request to suggest improvements.
+ - Implement Email notifications via SendGrid
 
-📜 License
-This project is licensed under the MIT License.
+---
 
-👨‍💻 Author
-Ahmed Saber
-GitHub: @a7medsaber10
+### 👨‍💻 Author
+**Ahmed Saber**
+- **GitHub**: @a7medsaber10
+- **Linkedin**: 
